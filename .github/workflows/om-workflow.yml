@@ -1,4 +1,4 @@
-name: traceconsumer CI workflow
+name: build and test CI workflow
 on: [push]
 env:
   MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
@@ -28,5 +28,7 @@ jobs:
     - name: Run all defined tests and generate war with Maven
       run: mvn -B verify --file pom.xml
     - run: ls ${GITHUB_WORKSPACE}/target/*.jar
+    - name: Publish Test Report
+      uses: scacap/action-surefire-report@v1
   
 
