@@ -27,7 +27,7 @@ jobs:
       run: mvn -B verify --file pom.xml
     - run: ls ${GITHUB_WORKSPACE}/target/*.jar
     - name: Publish Test Report
-        uses: scacap/action-surefire-report@v1
+      uses: scacap/action-surefire-report@v1
     - name: Upload target folder
       uses: actions/upload-artifact@v2
         with:
