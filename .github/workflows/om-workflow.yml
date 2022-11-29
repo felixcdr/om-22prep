@@ -26,11 +26,14 @@ jobs:
     - name: Run all defined tests and generate war with Maven
       run: mvn -B verify --file pom.xml
     - run: ls ${GITHUB_WORKSPACE}/target/*.jar
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        name: Test Results
-        path: ${{ github.workspace }}/target/surefire-reports/TEST-TestSuite.xml
-        reporter: java-junit
-        java-version: 14
+    - name: Publish Test Report
+        if: ${{ always() }}
+        uses: scacap/action-surefire-report@v1
+    - name: Upload target folder
+      uses: actions/upload-artifact@v2
+        with:
+        name: target
+        path: |
+          ${{ github.workspace }}/target
+          ${{ github.workspace }}/reports
+
